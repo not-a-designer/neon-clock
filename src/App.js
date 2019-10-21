@@ -1,24 +1,52 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import TimeReadout from './components/TimeReadout/TimeReadout';
+import styles from './App.module.css';
 
-function App() {
+
+
+const getNow = () => {
+  const now = new Date(Date.now());
+  const hour = now.getHours();
+  const minute = now.getMinutes();
+  const second = now.getSeconds();
+  const display = now.toLocaleString();
+
+  return {
+    hour,
+    minute,
+    second,
+    display
+  };
+}
+
+const useClock = () => {
+  const [ timer, setTimer ] = useState(null);
+  const [ time, setTime ] = useState(getNow());
+  useEffect(() => {
+    if (!timer) initTimer();
+    return (() => (timer && window.clearInterval(timer) && setTimer(null)));
+  }, [timer]);
+
+  const initTimer = () => {
+    const now = Date.now();
+    const nextSec = (Math.floor(now / 1000) + 1) * 1000;
+    const timeLeft = nextSec - now;
+  
+    window.setTimeout(() => {
+      const interval = window.setInterval(() => setTime(getNow(), 1000));
+      setTimer(interval);
+    }, timeLeft)
+  }
+  return time;
+}
+
+const App = () => {
+  const time = useClock();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={styles.Clock}>
+      {/**<StandardClock time={time} />*/}
+      <TimeReadout time={time} />
     </div>
   );
 }

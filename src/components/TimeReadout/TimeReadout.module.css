@@ -1,0 +1,46 @@
+.Phrases {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    word-spacing: 12px;
+    font-size: 36px;
+    line-height: 1.618;
+}
+
+.Timer {
+margin-top: 30px;
+margin-left: 10px;
+color: #a8b0f3;
+font-size: 20px;
+font-weight: bold;
+}
+
+span {
+color: #792d2d;
+margin: 0 10px;
+transition: all 0.5s cubic-bezier(0.6, -0.51, 0.5, 1.51);
+vertical-align: middle;
+filter: blur(2px);
+}
+.Glow {
+color: #ffc5b2;
+text-shadow: 0 0 20px #ff4343;
+font-weight: bold;
+filter: none;
+}
+@media only screen and (max-width: 960px) {
+    .Phrases {
+        font-size: 18px;
+        word-spacing: 7px;
+    }
+
+    span {
+        margin-right: 10px;
+        filter: blur(1px);
+    }
+
+    .Timer {
+        font-size: 12px;
+    }
+}
